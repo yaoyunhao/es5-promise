@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        var loadImg = (src) => {
+                return new Promise(resolve => {
+                    let img = new Image();
+                    img.onload = () => {
+                        resolve(img)
+                    }
+                    img.src = src;
+                })
+            }
+            // var imgs = ['./img/1.jpg', './img/2.jpg', './img/3.jpg', './img/4 (3).jpg', './img/4 (4).jpg', './img/4 (5).jpg', './img/4 (6).jpg', './img/4 (7).jpg', './img/4.jpg', './img/5.jpg'];
+        var imgs = ['https://img01.sogoucdn.com/net/a/04/link?url=http%3A%2F%2Fimg04.sogoucdn.com%2Fapp%2Fa%2F100520024%2F8a5cac4b4c8819b2b7b3014f952409be&appid=122',
+            'https://img04.sogoucdn.com/app/a/100520021/c4117e6229bdf64fef934bd715cefbcd',
+            'https://img04.sogoucdn.com/app/a/100520021/df53b973a491fcfde8c5ebc71e39dbf7',
+            'https://i03piccdn.sogoucdn.com/548ce394080eab36'
+        ];
+        let promises = imgs.map(item => loadImg(item));
+        // Promise.all(promises).then(res => {
+        //         res.forEach(item => document.body.appendChild(item));
+        //     })
+        // (async function loadImgAysnc() {
+        //     let imgss = [];
+        //     for (let i = 0; i < promises.length; i++) {
+        //         imgss.push(await promises[i]);
+        //     }
+        //     imgss.forEach(item => document.body.appendChild(item));
+        // })()
+        (() => {
+            let result = [];
+            imgs.forEach(item => {
+                let img = new Image();
+                img.onload = () => {
+                    result.push(img);
+                    if (result.length == imgs.length) {
+                        result.forEach(item => document.body.appendChild(item))
+                    }
+                }
+                img.src = item;
+            })
+        })()
+    </script>
+</body>
+
+</html>
